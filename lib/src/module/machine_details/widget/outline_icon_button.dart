@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../utils/app_text_style.dart';
 
 class OutlineIconButton extends StatelessWidget {
   final String text;
@@ -20,7 +21,7 @@ class OutlineIconButton extends StatelessWidget {
     return OutlinedButton.icon(
       onPressed: onPressed,
       icon:  Icon(icon, size: 18,color: isFilled ? Colors.white : Colors.black,),
-      label:  Text(text, style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400, color: isFilled ? Colors.white : Colors.black)),
+      label:  Text(text, style: AppTextStyles.regularSansBody.copyWith(color: isFilled ? Colors.white : Colors.black)),
       style: OutlinedButton.styleFrom(
         backgroundColor: isFilled ? fillColor : Colors.white,
         side:  BorderSide(color: isFilled ? fillColor : Colors.grey.shade400, width: 1),

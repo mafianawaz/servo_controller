@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:servo_controller/src/utils/constants.dart';
 import '../../../utils/app_decorations.dart';
+import '../../../utils/app_text_style.dart';
 
 class UserInfoCard extends StatelessWidget {
   final String username;
@@ -27,7 +29,7 @@ class UserInfoCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("User Information",style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),),
+            Text("User Information",style: AppTextStyles.heading3,),
             SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -37,9 +39,9 @@ class UserInfoCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Name",style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),),
+                      Text("Name",style: AppTextStyles.regularGreyBody,),
                       SizedBox(height: 5,),
-                      Text(username,style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                      Text(username,style: AppTextStyles.regularSansBody.copyWith(fontSize: 16),),
                     ],
                   ),
                 ),
@@ -47,9 +49,9 @@ class UserInfoCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Role",style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),),
+                      Text("Role",style: AppTextStyles.regularGreySansBody,),
                       SizedBox(height: 5,),
-                      Text(role,style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                      Text(role,style: AppTextStyles.regularSansBody.copyWith(fontSize: 16),),
                     ],
                   ),
                 ),
@@ -64,9 +66,9 @@ class UserInfoCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Email",style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),),
+                      Text("Email",style: AppTextStyles.regularGreySansBody,),
                       SizedBox(height: 5,),
-                      Text(email,style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                      Text(email,style: AppTextStyles.regularSansBody.copyWith(fontSize: 16)),
                     ],
                   ),
                 ),
@@ -74,17 +76,23 @@ class UserInfoCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Status",style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),),
+                      Text("Status",style: AppTextStyles.regularGreySansBody,),
                       SizedBox(height: 5,),
                       Container(
                         width: 80,
-                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                         decoration: BoxDecoration(
                           color: Colors.green,
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Center(
-                          child: Text(status, style: TextStyle(color: Colors.white, fontSize: 12),),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                          child: Row(
+                            children: [
+                              Image.asset(greenDot),
+                              SizedBox(width: 5,),
+                              Text(status, style: AppTextStyles.regularGreySansBody.copyWith(fontSize: 12, color: Colors.white),),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -101,9 +109,9 @@ class UserInfoCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Last Active",style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),),
+                      Text("Last Active",style: AppTextStyles.regularGreySansBody,),
                       SizedBox(height: 5,),
-                      Text(lastActive,style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                      Text(lastActive,style: AppTextStyles.regularSansBody.copyWith(fontSize: 16),),
                     ],
                   ),
                 ),
@@ -111,9 +119,9 @@ class UserInfoCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Created On",style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),),
+                      Text("Created On",style: AppTextStyles.regularGreySansBody,),
                       SizedBox(height: 5,),
-                      Text(createdOn,style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                      Text(createdOn,style: AppTextStyles.regularSansBody.copyWith(fontSize: 16)),
                     ],
                   ),
                 ),

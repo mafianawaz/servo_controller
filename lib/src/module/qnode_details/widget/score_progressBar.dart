@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../utils/app_text_style.dart';
 
 class HealthProgressBar extends StatelessWidget {
   final int completed;
@@ -25,10 +26,8 @@ class HealthProgressBar extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Health Score",
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400,color: Colors.grey),
-            ),
-            Text("${(progress * 100).toInt()}%",style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500,color: Colors.blue),),
+            Text("Health Score", style: AppTextStyles.regularGreySansBody,),
+            Text("${(progress * 100).toInt()}%",style: AppTextStyles.regularGreySansBody.copyWith(fontSize: 18, fontWeight: FontWeight.w500,color: Colors.blue),),
           ],
         ),
         const SizedBox(height: 6),

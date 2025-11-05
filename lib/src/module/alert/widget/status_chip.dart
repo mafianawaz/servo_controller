@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servo_controller/src/utils/app_text_style.dart';
 
 enum StatusType { critical, warning, info }
 
@@ -50,7 +51,7 @@ class StatusTypeChip extends StatelessWidget {
           ),
           child: Text(
             label,
-            style: TextStyle(
+            style: AppTextStyles.regularSansBody.copyWith(
               fontSize: 13,
               fontWeight: FontWeight.w500,
               color: textColor,

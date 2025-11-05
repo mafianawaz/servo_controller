@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:servo_controller/src/utils/responsive.dart';
 
+import '../utils/app_text_style.dart';
+
 
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final bool isLoading;
+  final double? fieldLength;
 
   const CustomButton({
     required this.text,
     required this.onPressed,
     this.isLoading = false,
-    super.key,
+    super.key, this.fieldLength,
   });
 
   @override
@@ -19,10 +22,10 @@ class CustomButton extends StatelessWidget {
     final r = context.responsive;
 
     return Container(
-      width: r.wp(r.isMobile ? 80 : 25),
+      width: r.wp(r.isMobile ? 80 : r.isTablet ? 50 : fieldLength ?? 25),
       decoration: BoxDecoration(
         color: Colors.blue,
-        borderRadius: BorderRadius.circular(r.dp(10)),
+        borderRadius: BorderRadius.circular(r.dp(12)),
       ),
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
@@ -44,11 +47,7 @@ class CustomButton extends StatelessWidget {
         )
             : Text(
           text,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: r.sp(16),
-            color: Colors.white,
-          ),
+          style: AppTextStyles.regularBody.copyWith(color: Colors.white),
         ),
       ),
     );

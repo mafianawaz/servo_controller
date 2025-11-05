@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:servo_controller/src/module/users/widget/status_chip.dart';
 import 'package:servo_controller/src/module/users/widget/table.dart';
+import 'package:servo_controller/src/utils/app_text_style.dart';
+import 'package:servo_controller/src/utils/constants.dart';
+import 'package:servo_controller/src/utils/responsive_scaffold.dart';
 import 'package:servo_controller/src/widget/custom_dropdown_button.dart';
 import 'package:servo_controller/src/widget/custom_text_form_field.dart';
+import 'package:servo_controller/src/widget/responsive_grid.dart';
 import '../../utils/app_decorations.dart';
-import '../../widget/responsive_scaffold.dart';
 import '../dashboard/widget/dashboard_count_card.dart';
+import '../user_details/view.dart';
 import 'logic.dart';
 
 class UsersView extends StatelessWidget {
@@ -16,22 +21,21 @@ class UsersView extends StatelessWidget {
     return GetBuilder(
       init: UsersLogic(),
       builder: (logic){
-      return ResponsiveScaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Column(
+      return ResponsiveScaffold(child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
           children: [
-            Align(alignment: Alignment.topLeft,child: Text("Manage Users",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)),
+            Align(alignment: Alignment.topLeft,child: Text("Manage Users",style: AppTextStyles.heading2,)),
             SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(child: CountCard(title: 'Total Users', count: '4', icon: '',)),
-                SizedBox(width: 20,),
-                Expanded(child: CountCard(title: 'Active Users', count: '3', icon: '',)),
-                SizedBox(width: 20,),
-                Expanded(child: CountCard(title: 'Disabled Users', count: '1', icon: '',)),
-              ],
+            Align(
+              alignment: Alignment.topLeft,
+              child: ResponsiveGrid(
+                children: [
+                  CountCard(title: 'Total Users', count: '4', icon: users,),
+                  CountCard(title: 'Active Users', count: '3', icon: activeUser,),
+                  CountCard(title: 'Disabled Users', count: '1', icon: disable,),
+                ],
+              ),
             ),
             SizedBox(height: 20,),
             Container(
@@ -41,85 +45,64 @@ class UsersView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("User Directory",style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
-                    SizedBox(height: 20,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ResponsiveGrid(
+                      spacing: 10,
+                      mobileCrossAxisCount: 1,
+                      tabletCrossAxisCount: 2,
+                      desktopCrossAxisCount: 1,
                       children: [
-                        CustomInputTextField(hintText: "Search by name or email",heading: 'Search',),
-                        SizedBox(width: 20,),
-                        Obx(() => CustomDropdown<String>(
-                          items: ["Admin", "Viewer", "Technician"],
-                          value: logic.selectedValue.value,
-                          itemLabel: (item) => item,
-                          onChanged: (val) {
-                            logic.selectedValue.value = val;
-                          },
-                          hintText: "All Roles",
-                          heading: 'Roles',
-                        )),
+                        Text("User Directory",style: AppTextStyles.heading2.copyWith(fontWeight: FontWeight.w500),),
+                        Wrap(
+                          spacing: 5,
+                          runSpacing: 10,
+                          alignment: WrapAlignment.spaceBetween,
+                          children: [
+                            CustomInputTextField(hintText: "Search by name or email",heading: 'Search',onChange: logic.updateSearch,leftIconPath: search,),
+                            Obx(() => CustomDropdown<String>(
+                              items: ["All","Admin", "Viewer", "Technician"],
+                              value: logic.selectedValue.value,
+                              itemLabel: (item) => item,
+                              onChanged: (val) {
+                                logic.selectedValue.value = val;
+                              },
+                              hintText: "All Roles",
+                              heading: 'Roles',
+                            )),
+                          ],
+                        ),
                       ],
                     ),
                     SizedBox(height: 20,),
-                  SingleChildScrollView(
-                  child: CustomTable(
-                    headers: ["Name", "Email", "Role", "Status", "Last Active", "Actions"],
-                    onPressed: (){Get.toNamed("/UsersDetails");},
-                    rows: [
-                      [
-                        const Text("Sarah Khan",style: TextStyle(fontWeight: FontWeight.w500),),
-                        const Text("sarah@example.com"),
-                        statusChip("Technician", Colors.grey.shade200, Colors.black87),
-                        statusChip("Active", Colors.green, Colors.white),
-                        const Text("2 hours ago"),
-                        Align(alignment: Alignment.topLeft,child: Icon(Icons.more_horiz)),
-                      ],
-                      [
-                        const Text("Imran Patel"),
-                        const Text("imran@example.com"),
-                        statusChip("Viewer", Colors.grey.shade200, Colors.black87),
-                        statusChip("Disabled", Colors.grey.shade200, Colors.black87),
-                        const Text("1 week ago"),
-                        Align(alignment: Alignment.topLeft,child: Icon(Icons.more_horiz)),
-                      ],
-                      [
-                        const Text("Ahmed Hassan"),
-                        const Text("ahmed@example.com"),
-                        statusChip("Admin", Colors.blue, Colors.white),
-                        statusChip("Active", Colors.green, Colors.white),
-                        const Text("1 hour ago"),
-                        Align(alignment: Alignment.topLeft,child: Icon(Icons.more_horiz)),
-                      ],
-                    ],
-                  ),
-                ),
-                  ],
+                    SingleChildScrollView(
+                      child: Obx(()=> CustomTable(
+                        headers: ["Name", "Email", "Role", "Status", "Last Active", "Actions"],
+                        onPressed: (){
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (_) => UsersDetails()),
+                          );
+                        },
+                        rows: logic.filteredUsers.map((user) {
+                          return [
+                            Text(user.name,style: AppTextStyles.regularSansBody.copyWith(fontWeight: FontWeight.w500),),
+                            Text(user.email,style: AppTextStyles.regularGreySansBody,),
+                            UserRoleChip(
+                                text: user.role,
+                                bg: user.role == "Admin" ? primaryColor : user.role == "Technician" ? Colors.grey.shade200: Colors.white,
+                                textColor: user.role == "Admin" ? Colors.white : Colors.black),
+                            UserStatusChip(text: user.status,),
+                            Text(user.lastActive, style: AppTextStyles.regularSansBody,),
+                            Align(alignment: Alignment.topLeft,child: Icon(Icons.more_horiz)),
+                          ];
+                        }).toList(),
+                      ),),
+                    ),
+                  ]
                 ),
               ),
             ),
           ],
-                ),
-        ),);
+        ),
+      ));
     });
-  }
-
-  static Widget statusChip(String text, Color bg, Color textColor) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Container(
-        width: 100,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        decoration: BoxDecoration(
-          color: bg,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(color: textColor, fontSize: 12),
-          ),
-        ),
-      ),
-    );
   }
 }

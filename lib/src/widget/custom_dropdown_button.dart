@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servo_controller/src/utils/app_text_style.dart';
 import 'package:servo_controller/src/utils/responsive.dart';
 import '../utils/constants.dart';
 
@@ -34,7 +35,7 @@ class CustomDropdown<T> extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   heading!,
-                  style: TextStyle(
+                  style: AppTextStyles.regularBody.copyWith(
                     fontSize: 14,
                     color: Colors.black, // Use the optional textColor
                   ),
@@ -53,12 +54,13 @@ class CustomDropdown<T> extends StatelessWidget {
             items: items.map((item) {
               return DropdownMenuItem<T>(
                 value: item,
-                child: Text(itemLabel(item)),
+                child: Text(itemLabel(item),style: AppTextStyles.regularBody,),
               );
             }).toList(),
             onChanged: onChanged,
             decoration: InputDecoration(
               hintText: hintText,
+              hintStyle: AppTextStyles.regularGreyBody,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: Colors.grey.shade200),

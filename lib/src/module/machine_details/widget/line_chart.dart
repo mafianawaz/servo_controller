@@ -1,6 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../../../utils/app_text_style.dart';
+
 class CustomLineChart extends StatelessWidget {
   final String title;
   final List<FlSpot> spots; // chart data points
@@ -28,7 +30,7 @@ class CustomLineChart extends StatelessWidget {
           // Chart title
           Text(
             title,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+            style:  AppTextStyles.regularSansBody.copyWith(fontWeight: FontWeight.w500),
           ),
           SizedBox(height: 20),
           Expanded(
@@ -50,7 +52,7 @@ class CustomLineChart extends StatelessWidget {
                         if (index >= 0 && index < xLabels.length) {
                           return Text(
                             xLabels[index],
-                            style: const TextStyle(fontSize: 10),
+                            style: AppTextStyles.regularSansBody.copyWith(fontSize: 10),
                           );
                         }
                         return const SizedBox.shrink();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../utils/app_decorations.dart';
+import '../../../utils/app_text_style.dart';
 
 class FaultLogsCard extends StatelessWidget {
   final String timeStamp;
@@ -21,22 +22,22 @@ class FaultLogsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Fault Logs', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+            Text('Fault Logs', style: AppTextStyles.regularSansBody.copyWith(fontSize: 18, fontWeight: FontWeight.w500),),
             SizedBox(height: 20,),
             Row(
               children: [
-                Expanded(child: Text('Timestamp', style: TextStyle(fontSize: 12, color: Colors.grey),)),
-                Expanded(child: Text('Fault Type', style: TextStyle(fontSize: 12, color: Colors.grey),)),
-                Expanded(child: Text('Severity', style: TextStyle(fontSize: 12, color: Colors.grey),)),
-                Expanded(child: Text('Status', style: TextStyle(fontSize: 12, color: Colors.grey),)),
+                Expanded(child: Text('Timestamp', style: AppTextStyles.regularGreyBody.copyWith(fontSize: 12,),)),
+                Expanded(child: Text('Fault Type', style: AppTextStyles.regularGreyBody.copyWith(fontSize: 12,),)),
+                Expanded(child: Text('Severity', style: AppTextStyles.regularGreyBody.copyWith(fontSize: 12,),)),
+                Expanded(child: Text('Status', style: AppTextStyles.regularGreyBody.copyWith(fontSize: 12,),)),
               ],
             ),
             Divider(color: Colors.grey.shade200,),
             SizedBox(height: 20,),
             Row(
               children: [
-                Expanded(child: Text(timeStamp, style: TextStyle(fontSize: 12, color: Colors.grey),)),
-                Expanded(child: Text(faultType, style: TextStyle(fontSize: 12),)),
+                Expanded(child: Text(timeStamp, style: AppTextStyles.regularGreyBody.copyWith(fontSize: 12,),)),
+                Expanded(child: Text(faultType, style: AppTextStyles.regularSansBody.copyWith(fontSize: 12,),)),
                 Expanded(child: Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
@@ -46,7 +47,7 @@ class FaultLogsCard extends StatelessWidget {
                         border: Border.all(color: color),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: Text(severity, style: TextStyle(fontSize: 12, color: color),)),
+                      child: Text(severity, style: AppTextStyles.regularSansBody.copyWith(fontSize: 12, color: color),)),
                 )),
                 Expanded(child: Align(
                   alignment: Alignment.centerLeft,
@@ -57,7 +58,7 @@ class FaultLogsCard extends StatelessWidget {
                         border: Border.all(color: color),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: Text(status, style: TextStyle(fontSize: 12, color: color),)),
+                      child: Text(status, style: AppTextStyles.regularSansBody.copyWith(fontSize: 12, color: color),)),
                 )),                                  ],
             ),
 

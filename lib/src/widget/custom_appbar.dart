@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:servo_controller/src/utils/app_text_style.dart';
+import 'package:servo_controller/src/utils/constants.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   // final String username;
@@ -33,26 +35,27 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      RichText(
-                        text: TextSpan(
-                          text: "Welcome back, ",
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 16),
-                          children: [
-                            TextSpan(
-                              text: 'John',
-                              style: const TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
+                      Row(
+                        children: [
+                          Image.asset(appBarIcon),
+                          SizedBox(width: 15,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Welcome back, John",
+                                style: AppTextStyles.heading3.copyWith(color: primaryColor),
                               ),
-                            ),
-                          ],
-                        ),
+                              Text(
+                                "Ready to monitor your industrial systems",
+                                style: AppTextStyles.regularGreyBody.copyWith(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      const Text(
-                        "Ready to monitor your industrial systems",
-                        style: TextStyle(color: Colors.grey, fontSize: 13),
-                      ),
+
+
                     ],
                   );
                 } else {
@@ -84,7 +87,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                         child: Text(
                           "0",
-                          style: const TextStyle(
+                          style: AppTextStyles.regularBody.copyWith(
                               color: Colors.white, fontSize: 10),
                         ),
                       ),
@@ -101,7 +104,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   // username.isNotEmpty
                   //     ? username[0].toUpperCase()
                        "?",
-                  style: const TextStyle(color: Colors.white),
+                  style: AppTextStyles.regularBody.copyWith(color: Colors.white),
                 ),
               ),
               const SizedBox(width: 8),
@@ -110,12 +113,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('John',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 14)),
-                    Text('Admin',
-                        style: const TextStyle(
-                            color: Colors.grey, fontSize: 12)),
+                    Text('John', style: AppTextStyles.regularBody.copyWith(fontWeight: FontWeight.w500)),
+                    Text('Admin', style: AppTextStyles.regularGreyBody.copyWith(fontSize: 12)),
                   ],
                 ),
                 const Icon(Icons.arrow_drop_down),

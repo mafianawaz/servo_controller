@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servo_controller/src/utils/app_text_style.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class TimeAgoWidget extends StatelessWidget {
@@ -30,7 +31,7 @@ class TimeAgoWidget extends StatelessWidget {
           ),
         Text(
           timeAgoText,
-          style: const TextStyle(
+          style: AppTextStyles.regularSansBody.copyWith(
             fontSize: 14,
             color: Colors.black87,
           ),

@@ -4,6 +4,9 @@ import 'package:servo_controller/src/module/dashboard/logic.dart';
 import 'package:servo_controller/src/widget/custom_outline_button.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import '../../../utils/app_decorations.dart';
+import '../../../utils/app_text_style.dart';
+
+
 
 class RecentAlerts extends StatelessWidget {
   final DashboardLogic logic;
@@ -11,121 +14,160 @@ class RecentAlerts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: Container(
-        decoration: AppDecorations.cardDecoration,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-          child: Obx(() {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Header
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const Text(
-                      "Recent Alerts",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(height: 10,),
-                    if (logic.newAlertsCount > 0)
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          "${logic.newAlertsCount} New",
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.grey),
-                        ),
-                      ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  height: 330,
-                  child: ListView.builder(
-                    itemCount: logic.alerts.length,
-                    itemBuilder: (context, index) {
-                      final alert = logic.alerts[index];
+    final width = MediaQuery.of(context).size.width;
+    final bool isMobile = width < 600;
+    final bool isTablet = width >= 600 && width < 1024;
 
-                      return GestureDetector(
-                        onTap: () => logic.markAsRead(index),
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          decoration: BoxDecoration(
-                              color: alert.isNew
-                                  ? Colors.blue.shade50
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.grey.shade200)
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-                            child: Column(
+    final double fontSizeText = isMobile ? 12 : isTablet ? 13 : 14;
+    final double paddingValue = isMobile ? 10 : 15;
+
+    return Container(
+      decoration: AppDecorations.cardDecoration,
+      padding: EdgeInsets.all(paddingValue),
+      child: Obx(() {
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header Section
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Recent Alerts",
+                    style: AppTextStyles.heading3,
+                  ),
+                  if (logic.newAlertsCount > 0)
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        "${logic.newAlertsCount} New",
+                        style: AppTextStyles.regularSansBody.copyWith(fontSize: fontSizeText, color: Colors.grey.shade700,),
+                      ),
+                    ),
+                ],
+              ),
+              SizedBox(height: isMobile ? 10 : 16),
+
+              // Alerts List (not fixed height anymore)
+              ListView.builder(
+                itemCount: logic.alerts.length,
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final alert = logic.alerts[index];
+
+                  return GestureDetector(
+                    onTap: () => logic.markAsRead(index),
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 6),
+                      decoration: BoxDecoration(
+                        color: alert.isNew
+                            ? Colors.blue.shade50
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.grey.shade200, width: 1),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: isMobile ? 8 : 10,
+                          horizontal: isMobile ? 8 : 10,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(Icons.access_time, size: 18, color: Colors.blueGrey),
-                                        SizedBox(width: 10,),
-                                        Text(timeago.format(alert.time), style: const TextStyle(fontSize: 14,color: Colors.blueGrey),),
-                                      ],
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: alert.color.withOpacity(0.1),
-                                        borderRadius: BorderRadius.circular(12),
+                                // Time info
+                                Expanded(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(Icons.access_time, size: 16, color: Colors.blueGrey),
+                                      const SizedBox(width: 6),
+                                      Flexible(
+                                        child: Text(
+                                          timeago.format(alert.time),
+                                          style: AppTextStyles.regularSansBody.copyWith(
+                                            fontSize: fontSizeText,
+                                            color: Colors.blueGrey,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                      child: Text(
-                                        alert.type,
-                                        style: TextStyle(
-                                            color: alert.color, fontSize: 12),
-                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                const SizedBox(width: 8),
+
+                                // Type badge (wraps automatically)
+                                Flexible(
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(horizontal: isMobile ? 8 : 10, vertical: 3),
+                                    decoration: BoxDecoration(
+                                      color: alert.color.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
-                                  ],
-                                ),
-                                SizedBox(height: 10,),
-                                Text(
-                                  alert.message,
-                                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                                ),
-                                const SizedBox(height: 10),
-                                if (alert.isNew)
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.blue,
-                                      shape: BoxShape.circle,
+                                    child: Text(
+                                      alert.type,
+                                      style: AppTextStyles.regularSansBody.copyWith(
+                                        color: alert.color,
+                                        fontSize: fontSizeText - 1,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
+                                ),
                               ],
                             ),
-                          ),
 
+                            SizedBox(height: isMobile ? 6 : 10),
+
+                            // Message
+                            Text(
+                              alert.message,
+                              style: AppTextStyles.regularSansBody.copyWith(fontSize: fontSizeText,),
+                            ),
+                            SizedBox(height: isMobile ? 6 : 10),
+                            // New Indicator Dot
+                            if (alert.isNew)
+                              Container(
+                                width: 8,
+                                height: 8,
+                                decoration: const BoxDecoration(
+                                  color: Colors.blue,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                          ],
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+
+              SizedBox(height: isMobile ? 8 : 12),
+
+              // View All Button
+              Center(
+                child: CustomOutlineButton(
+                  text: 'View All Alerts',
+                  onPressed: () {},
                 ),
-
-
-                const SizedBox(height: 10),
-                Center(child: CustomOutlineButton(text: 'View All Alerts', onPressed: (){})),
-              ],
-            );
-          }),
-        ),
-      ),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

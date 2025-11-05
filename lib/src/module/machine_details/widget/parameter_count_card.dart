@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../utils/app_text_style.dart';
+
 class ParameterCountCard extends StatelessWidget {
   final String title;
   final String count;
@@ -17,18 +19,15 @@ class ParameterCountCard extends StatelessWidget {
           color: Colors.blue.shade50
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(title,style: TextStyle(fontSize: 14, color: Colors.grey,fontWeight: FontWeight.w400),),
-              ],
+            ListTile(
+              title: Text(title,style: AppTextStyles.regularGreyBody,),
+              subtitle: Text(count,style: AppTextStyles.regularSansBody.copyWith(fontSize: 18, fontWeight: FontWeight.w500),),
             ),
-            SizedBox(height: 10,),
-            Text(count,style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
+
           ],
         ),
       ),

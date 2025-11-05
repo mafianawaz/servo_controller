@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../utils/app_text_style.dart';
+
 class AlertCountCard extends StatelessWidget {
   final String status; // critical, warning, unread
   final int count;
@@ -71,7 +73,7 @@ class AlertCountCard extends StatelessWidget {
               children: [
                 Text(
                   count.toString(),
-                  style: TextStyle(
+                  style: AppTextStyles.regularSansBody.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
                     color: borderColor,
@@ -79,11 +81,7 @@ class AlertCountCard extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.grey,
-                  ),
+                  style: AppTextStyles.regularGreySansBody,
                 ),
               ],
             ),

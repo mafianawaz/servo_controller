@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../utils/app_text_style.dart';
+
 class StatusText extends StatelessWidget {
   final String status;
   const StatusText({super.key, required this.status});
@@ -20,7 +22,6 @@ class StatusText extends StatelessWidget {
       default:
         color = Colors.grey;
     }
-    return Text(status, style: TextStyle(color: color,fontSize: 14
-    ),);
+    return Text(status, style: AppTextStyles.regularGreySansBody.copyWith(color: color,),);
   }
 }

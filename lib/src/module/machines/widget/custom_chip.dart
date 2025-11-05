@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servo_controller/src/utils/app_text_style.dart';
 
 class CustomChip extends StatelessWidget {
   final String text;
@@ -22,10 +23,10 @@ class CustomChip extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Container(
         width: 100,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
         decoration: BoxDecoration(
           color: isOutline ? Colors.white : color.withOpacity(0.1),
-          border: Border.all(color: isOutline ? Colors.black : color, width: 1),
+          border: Border.all(color: isOutline ? Colors.grey.shade300 : color, width: 1),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Center(
@@ -36,7 +37,7 @@ class CustomChip extends StatelessWidget {
                   const SizedBox(width: 4),
                   Text(
                     text,
-                    style: TextStyle(
+                    style: AppTextStyles.regularBody.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: isOutline ? Colors.black : color,
@@ -46,7 +47,7 @@ class CustomChip extends StatelessWidget {
               ) :
           Text(
             text,
-            style: TextStyle(
+            style: AppTextStyles.regularBody.copyWith(
               fontSize: 12,
               fontWeight: FontWeight.w600,
               color: isOutline ? Colors.black : color,
@@ -80,7 +81,7 @@ class StatusChip extends StatelessWidget {
         color = Colors.orange;
         break;
       default:
-        color = Colors.grey;
+        color = Colors.black;
     }
     return CustomChip(text: status, color: color);
   }
@@ -119,9 +120,9 @@ class AlertChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (count == 0) {
-      return const Text(
+      return  Text(
         "None",
-        style: TextStyle(fontSize: 12, color: Colors.grey),
+        style: AppTextStyles.regularGreyBody.copyWith(fontSize: 12,),
       );
     }
 
@@ -133,7 +134,7 @@ class AlertChip extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           count.toString(),
-          style: const TextStyle(
+          style: AppTextStyles.regularBody.copyWith(
             fontSize: 12,
             fontWeight: FontWeight.w600,
             color: Colors.red,

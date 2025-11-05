@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../utils/app_text_style.dart';
+
 class PercentText extends StatelessWidget {
   final int value;
   final double fontSize;
@@ -20,9 +22,8 @@ class PercentText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       "$value%",
-      style: TextStyle(
+      style: AppTextStyles.regularBody.copyWith(
         fontSize: fontSize,
-        fontWeight: FontWeight.w400,
         color: _getColor(),
       ),
     );

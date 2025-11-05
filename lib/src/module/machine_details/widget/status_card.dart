@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../utils/app_text_style.dart';
+
 class StatusCard extends StatelessWidget {
   final String title;
   final String status;
@@ -23,11 +25,11 @@ class StatusCard extends StatelessWidget {
               children: [
                 Icon(Icons.check_circle_outline,color: Colors.blue.shade300,),
                 SizedBox(width: 10,),
-                Text(title,style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: Colors.blue.shade300),),
+                Text(title,style: AppTextStyles.regularSansBody.copyWith(color: Colors.blue.shade300),),
               ],
             ),
             SizedBox(height: 10,),
-            Text(status,style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500,color: Colors.blue.shade300),),
+            Text(status,style: AppTextStyles.regularSansBody.copyWith(fontSize: 16, fontWeight: FontWeight.w500,color: Colors.blue.shade300),),
           ],
         ),
       ),

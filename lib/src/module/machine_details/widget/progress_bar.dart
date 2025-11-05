@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
+import '../../../utils/app_text_style.dart';
+
 class CircularProgressBar extends StatelessWidget {
   final double percent; // value between 0 and 1
   final String label;
@@ -28,7 +30,7 @@ class CircularProgressBar extends StatelessWidget {
       percent: percent,
       center: Text(
         label.isNotEmpty ? label : "${(percent * 100).toInt()}%",
-        style: const TextStyle(
+        style:  AppTextStyles.regularSansBody.copyWith(
           fontWeight: FontWeight.bold,
           fontSize: 18,
         ),

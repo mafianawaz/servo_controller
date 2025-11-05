@@ -15,6 +15,7 @@ import 'package:servo_controller/src/module/settings/view.dart';
 import 'package:servo_controller/src/module/user_details/view.dart';
 import 'package:servo_controller/src/module/users/view.dart';
 import 'package:servo_controller/src/utils/theme.dart';
+import 'package:servo_controller/src/widget/custom_sidebar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeCollection.lightTheme,
       initialRoute: "/login",
       getPages: [
+        GetPage(name: '/SideBarNavigation', page: () => const SideBarNavigation()),
         GetPage(name: "/dashboard", page: () => const DashboardView()),
         GetPage(name: "/login", page: () => const LoginView()),
         GetPage(name: "/forgotPassword", page: () => const ForgotPasswordView()),

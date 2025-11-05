@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:servo_controller/src/utils/responsive.dart';
+import '../utils/app_text_style.dart';
 import '../utils/constants.dart';
 
 class CustomInputTextField extends StatelessWidget {
@@ -19,6 +20,8 @@ class CustomInputTextField extends StatelessWidget {
   final VoidCallback? onTogglePasswordStatus;
   final bool? obscureText;
   final int? maxLines;
+  final double? fieldLength;
+  final Color? hintTextColor;
 
   const CustomInputTextField({
     super.key,
@@ -34,7 +37,7 @@ class CustomInputTextField extends StatelessWidget {
     this.leftIconPath,
     this.rightIcon,
     this.heading, this.onChange, this.validate, this.onTogglePasswordStatus,
-    this.maxLines
+    this.maxLines, this.fieldLength, this.hintTextColor
   });
 
   @override
@@ -44,23 +47,20 @@ class CustomInputTextField extends StatelessWidget {
       children: [
         if ((heading ?? '').isNotEmpty)
           SizedBox(
-            width: r.wp(r.isMobile ? 80 : 25),
+            width: r.wp(r.isMobile ? 80 : r.isTablet ? 50 : fieldLength ?? 25),
             child: Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   heading!,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black, // Use the optional textColor
-                  ),
+                  style: AppTextStyles.regularBody,
                 ),
               ),
             ),
           ),
         SizedBox(
-          width: r.wp(r.isMobile ? 80 : 25),
+          width: r.wp(r.isMobile ? 80  : r.isTablet ? 50 : fieldLength ?? 25),
           child: TextFormField(
             controller: controller,
             onChanged: onChange,
@@ -80,12 +80,12 @@ class CustomInputTextField extends StatelessWidget {
             autocorrect: autocorrect,
             textCapitalization: textCapitalization,
             onSaved: onSubmit,
+            style: AppTextStyles.regularBody.copyWith(
+              color: hintTextColor ?? Colors.black,
+            ),
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(
-                color: Colors.grey.shade300,
-                fontSize: 14,
-              ),
+              hintStyle: AppTextStyles.regularGreyBody,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: const BorderSide(

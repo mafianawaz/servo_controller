@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
 import '../../../utils/app_decorations.dart';
+import '../../../utils/app_text_style.dart';
 
 class CountCard extends StatelessWidget {
   final String title;
   final String count;
-  final String? icon;
+  final String icon;
   const CountCard({
-    super.key, required this.title, required this.count,  this.icon,
+    super.key, required this.title, required this.count,required  this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 250,
-      height: 120,
       decoration: AppDecorations.cardDecoration,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(title,style: TextStyle(fontSize: 16, color: Colors.grey),),
-                Icon(Icons.person, size: 20,),
-              ],
+            ListTile(
+              title: Text(title,style: AppTextStyles.regularGreyBody),
+              subtitle: Text(count,style: AppTextStyles.regularBody.copyWith(fontSize: 18,fontWeight: FontWeight.w500),),
+              trailing: Image.asset(icon,height: 20,width: 20,),
             ),
-            SizedBox(height: 10,),
-            Text(count,style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
           ],
         ),
       ),
