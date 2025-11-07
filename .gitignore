@@ -18,7 +18,6 @@ migrate_working_dir/
 *.iws
 .idea/
 
-# VS Code
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
@@ -33,10 +32,12 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 
-# Build output (ignored for all except web)
-# Keep all build folders ignored except build/web
 /build/
-!/build/web/
+/build/**
+
+# Allow only Flutter Web build output
+!build/web/
+!build/web/**
 
 # Symbolication related
 app.*.symbols
@@ -44,7 +45,7 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# Android Studio build artifacts
+# Android Studio will place build artifacts here
 /android/app/debug
 /android/app/profile
 /android/app/release
